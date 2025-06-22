@@ -1,3 +1,4 @@
+
 pipeline {
   agent any
   tools {
@@ -5,8 +6,10 @@ pipeline {
     jdk 'jdk-17'
   }
   environment {
-    IMAGE_NAME = "dockerregmrudula.azurecr.io/petclinic:${BUILD_NUMBER}"
-  }
+  JAVA_HOME = "/usr/lib/jvm/java-17-openjdk-amd64"
+  PATH = "/usr/lib/jvm/java-17-openjdk-amd64/bin:$PATH:$PATH"
+  IMAGE_NAME = "dockerregmrudula.azurecr.io/petclinic:${BUILD_NUMBER}"
+}
   stages {
     stage('Checkout') {
       steps {
