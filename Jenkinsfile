@@ -58,15 +58,15 @@ pipeline {
     }
 
     stage('Deploy to AKS') {
-      steps {
-        sh 'kubectl apply -f k8s/deployment.yaml'
-        sh 'kubectl apply -f k8s/service.yaml'
-      }
+  steps {
+    withCredentials([usernamePassword(credentialsId: 'spn-auth', usernameVariable: 'SPN_ID', passwordVariable: 'SPN_SECRET')]) {
+      sh '''
+        az login --service-principal -u $SPN_ID -p $SPN_SECRET --tenant 49bba7a4-424b-4070-a70e-886e9dd7caef
+        az aks get-credentials --resource-group PetClinicRG --name petclinicAKS --overwrite-existing
+        kubectl apply -f k8s/deployment.yaml --validate=false
+        kubectl apply -f k8s/service.yaml --validate=false
+      '''
     }
   }
 }
-
-    
-
-
 
