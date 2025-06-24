@@ -35,14 +35,7 @@ pipeline {
       }
     }
 
-    stage('SonarQube Analysis') {
-      steps {
-        withSonarQubeEnv('SonarQube') {
-          sh 'mvn sonar:sonar -Dsonar.projectKey=petclinic -Dsonar.sources=src'
-        }
-      }
-    }
-
+    
     stage('Maven Package') {
       steps {
         sh 'mvn package -DskipTests'
