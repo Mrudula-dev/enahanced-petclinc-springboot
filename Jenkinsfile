@@ -43,12 +43,10 @@ pipeline {
     }
 
     stage('Docker Build') {
-      steps {
-        script {
-          dockerImage = docker.build("$IMAGE_NAME")
-        }
-      }
-    }
+  steps {
+    sh 'docker build -t $IMAGE_NAME .'
+  }
+}
 
     stage('Docker Push') {
       steps {
